@@ -36,18 +36,26 @@ class workFlowsWidget:
 
   	self.Step1 = Flujos.Step1('Step1')
   	self.Step2 = Flujos.Step2('Step2')
+  	self.Step3 = Flujos.Step3('Step3')
+  	self.Step4 = Flujos.Step2('Step4')
 
   	steps = []
 	steps.append(self.Step1)
 	steps.append(self.Step2)
+	steps.append(self.Step3)
+	steps.append(self.Step4)
 
 	self.workflow = ctk.ctkWorkflow()
 	workflowWidget = ctk.ctkWorkflowStackedWidget()
 	workflowWidget.setWorkflow(self.workflow)
 
+	
+	self.workflow.addTransition(self.Step1, self.Step2, 'pass', ctk.ctkWorkflow.Bidirectional )
+	self.workflow.addTransition(self.Step1, self.Step3, 'fail', ctk.ctkWorkflow.Bidirectional )
+	self.workflow.addTransition(self.Step3, self.Step4)
+	self.workflow.addTransition(self.Step2, self.Step4)
 
-	for i in xrange(len(steps) - 1):
-	    self.workflow.addTransition(steps[i], steps[i + 1])
+	print self.Step2
 
 	self.workflow.start()
 	workflowWidget.visible = True

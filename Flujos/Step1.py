@@ -40,16 +40,20 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
     
     def onExit(self, goingTo, transitionType):
         super(Step1, self).onExit(goingTo, transitionType)
-        print('onExit - step %s' % self.id())
+        print goingTo
+
     
     def validate(self, desiredBranchId):
-        validationSuceeded = self.EstudianteButton.isChecked()
-        super(Step1, self).validate(validationSuceeded, desiredBranchId)
-        print('Validate - step %s - %d' % (self.id(), validationSuceeded))
+        if self.EstudianteButton.isChecked():
+          desiredBranchId = 'pass'
+        if self.ProfesorButton.isChecked():
+          desiredBranchId = 'fail'
+        super(Step1, self).validate(True, desiredBranchId)
+        
 
 
     def killButton(self):
         # hide useless button
-        bl = slicer.util.findChildren(text='Step2')
+        bl = slicer.util.findChildren(text='Step4')
         bl[0].hide()
 
