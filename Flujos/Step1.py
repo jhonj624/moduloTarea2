@@ -1,13 +1,12 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
 
-
 class Step1(ctk.ctkWorkflowWidgetStep) :
     """Step implemented using the derivation approach"""
     
     def __init__(self, stepid):
         self.initialize(stepid)
-        self.setName( '1. Seleccion de perfil')
+        self.setName( 'Seleccion de perfil')
            
     def createUserInterface(self):
 
@@ -32,7 +31,6 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
         self.__layout.addRow(self.ProfesorButton)
 
         qt.QTimer.singleShot(0, self.killButton)
-
   
     def onEntry(self, comingFrom, transitionType):
         super(Step1, self).onEntry(comingFrom, transitionType)
@@ -50,10 +48,18 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
           desiredBranchId = 'fail'
         super(Step1, self).validate(True, desiredBranchId)
         
-
-
     def killButton(self):
         # hide useless button
-        bl = slicer.util.findChildren(text='Step4')
+        bl = slicer.util.findChildren(text='Step6' )
+        b2 = slicer.util.findChildren(text='Step7' )
+        b3 = slicer.util.findChildren(text='Step8' )
+        b4 = slicer.util.findChildren(text='Step9' )
+        b5 = slicer.util.findChildren(text='Step10' )
+
         bl[0].hide()
+        b2[0].hide()
+        b3[0].hide()
+        b4[0].hide()
+        b5[0].hide()
+
 

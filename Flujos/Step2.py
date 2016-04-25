@@ -6,9 +6,8 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
     
     def __init__(self, stepid):
         self.initialize(stepid)
-        self.setName( '2. Name of %s' % self.id() )
-        self.setDescription( 'This is the description of %s.' % self.id() )
-    
+        self.setName( '2. Log in alumno ' )
+       
     def createUserInterface(self):
         self.__layout = qt.QFormLayout( self )
         self.__layout.addRow("",qt.QWidget())
@@ -28,6 +27,8 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
         self.contrasenaTextEdit.textChanged.connect(self.textchanged2)
         self.__layout.addRow(self.contrasenaLabeL,self.contrasenaTextEdit)
 
+        
+
         qt.QTimer.singleShot(0, self.killButton)
     
     def onEntry(self, comingFrom, transitionType):
@@ -39,14 +40,29 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
         print('onExit - step %s' % self.id())
     
     def validate(self, desiredBranchId):
-        validationSuceeded = True
+        if (self.name =="Alumno" and self.contra == "1111"):
+          validationSuceeded = True
+        else:
+          validationSuceeded = False
+          qt.QMessageBox.critical(slicer.util.mainWindow(),'Error Login', 'Usuario y/o contrasena invalidos')
+          
         super(Step2, self).validate(validationSuceeded, desiredBranchId)
         print('Validate - step %s' % self.id())
 
     def killButton(self):
-        # hide useless button
-        bl = slicer.util.findChildren(text='Step4')
+        bl = slicer.util.findChildren(text='Step6' )
+        b2 = slicer.util.findChildren(text='Step7' )
+        b3 = slicer.util.findChildren(text='Step8' )
+        b4 = slicer.util.findChildren(text='Step9' )
+        b5 = slicer.util.findChildren(text='Step10' )
+
         bl[0].hide()
+        b2[0].hide()
+        b3[0].hide()
+        b4[0].hide()
+        b5[0].hide()
+
+
 
     def textchanged1(self,text):
         self.name = text
