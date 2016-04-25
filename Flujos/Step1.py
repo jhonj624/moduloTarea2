@@ -32,13 +32,13 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
         self.__layout.addRow(self.ProfesorButton)
         self.__layout.addRow(" ",qt.QWidget())
         self.__layout.addRow(self.soyNuevoButton)
-
-        qt.QTimer.singleShot(0, self.killButton)
   
     def onEntry(self, comingFrom, transitionType):
+        self.ctimer = qt.QTimer()
+        self.ctimer.singleShot(0, self.killButton)
+        
         super(Step1, self).onEntry(comingFrom, transitionType)
-        print('onEntry - step %s' % self.id())
-    
+        
     def onExit(self, goingTo, transitionType):
         super(Step1, self).onExit(goingTo, transitionType)
         print goingTo

@@ -57,9 +57,7 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
         self.__layout.addRow(self.botonRegistro)
         self.__layout.addRow(self.botonReiniciarRegistro)
 
-        qt.QTimer.singleShot(0, self.killButton)
-
-    
+        
     def onEntry(self, comingFrom, transitionType):
         super(Step0, self).onEntry(comingFrom, transitionType)
         print('onEntry - step %s' % self.id())
@@ -104,13 +102,13 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
             if (self.contra == self.contra1) and (self.name != " ") :
                 print "Registro exitoso"
             else:
-                print "Error de registro"
+                qt.QMessageBox.critical(slicer.util.mainWindow(),'Error de registro', 'Intente de nuevo')
 
         else:
             if (self.contra == self.contra1):
                 print "Registro exitoso"
             else:
-                print "Contrasenas diferentes"
+                qt.QMessageBox.critical(slicer.util.mainWindow(),'Error de registro', 'Intente de nuevo')
 
     def onApplyReiniciarRegistro(self):
         print "Reinicio de registro"

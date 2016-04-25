@@ -28,10 +28,10 @@ class Step3(ctk.ctkWorkflowWidgetStep, ) :
         self.contrasenaTextEdit.textChanged.connect(self.textchanged2)
         self.__layout.addRow(self.contrasenaLabeL,self.contrasenaTextEdit)
 
-        qt.QTimer.singleShot(0, self.killButton)
-    
     def onEntry(self, comingFrom, transitionType):
         super(Step3, self).onEntry(comingFrom, transitionType)
+        self.ctimer = qt.QTimer()
+        self.ctimer.singleShot(0, self.killButton)
         print('onEntry - step %s' % self.id())
     
     def onExit(self, goingTo, transitionType):
@@ -60,11 +60,13 @@ class Step3(ctk.ctkWorkflowWidgetStep, ) :
         b3 = slicer.util.findChildren(text='Step8' )
         b4 = slicer.util.findChildren(text='Step9' )
         b5 = slicer.util.findChildren(text='Step10' )
+        b6 = slicer.util.findChildren(text='Step0' )
 
         bl[0].hide()
         b2[0].hide()
         b3[0].hide()
         b4[0].hide()
         b5[0].hide()
+        b6[0].hide()
 
 

@@ -25,14 +25,12 @@ class Step5(ctk.ctkWorkflowWidgetStep, ) :
 
         self.__layout.addRow(self.trayectoriaLibreButton)
         self.__layout.addRow(self.trayectoriaProgramadaButton)
-
-        qt.QTimer.singleShot(0, self.killButton)
-
-    
+            
     def onEntry(self, comingFrom, transitionType):
         super(Step5, self).onEntry(comingFrom, transitionType)
-        print('onEntry - step %s' % self.id())
-    
+        self.ctimer = qt.QTimer()
+        self.ctimer.singleShot(0, self.killButton)
+            
     def onExit(self, goingTo, transitionType):
         super(Step5, self).onExit(goingTo, transitionType)
         print('onExit - step %s' % self.id())
@@ -52,9 +50,11 @@ class Step5(ctk.ctkWorkflowWidgetStep, ) :
         b3 = slicer.util.findChildren(text='Step8' )
         b4 = slicer.util.findChildren(text='Step9' )
         b5 = slicer.util.findChildren(text='Step10' )
+        b6 = slicer.util.findChildren(text='Step0' )
 
         bl[0].hide()
         b2[0].hide()
         b3[0].hide()
         b4[0].hide()
         b5[0].hide()
+        b6[0].hide()
