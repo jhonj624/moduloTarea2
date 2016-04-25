@@ -21,14 +21,17 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
         self.__layout.addRow(self.nombreBienvenida)
         self.__layout.addRow(" ",qt.QWidget())
         self.__layout.addRow(" ",qt.QWidget())
-        self.__layout.addRow(" ",qt.QWidget())
         self.EstudianteButton = qt.QRadioButton('Soy estudiante')
         self.EstudianteButton.setFont(font)
         self.ProfesorButton = qt.QRadioButton('Soy profesor')
         self.ProfesorButton.setFont(font)
+        self.soyNuevoButton = qt.QRadioButton('Soy nuevo')
+        self.soyNuevoButton.setFont(font)
         self.__layout.addRow(self.EstudianteButton)
         self.__layout.addRow(" ",qt.QWidget())
         self.__layout.addRow(self.ProfesorButton)
+        self.__layout.addRow(" ",qt.QWidget())
+        self.__layout.addRow(self.soyNuevoButton)
 
         qt.QTimer.singleShot(0, self.killButton)
   
@@ -39,13 +42,14 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
     def onExit(self, goingTo, transitionType):
         super(Step1, self).onExit(goingTo, transitionType)
         print goingTo
-
     
     def validate(self, desiredBranchId):
         if self.EstudianteButton.isChecked():
           desiredBranchId = 'pass'
         if self.ProfesorButton.isChecked():
           desiredBranchId = 'fail'
+        if self.soyNuevoButton.isChecked():
+          desiredBranchId = 'Reg'
         super(Step1, self).validate(True, desiredBranchId)
         
     def killButton(self):
@@ -55,11 +59,13 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
         b3 = slicer.util.findChildren(text='Step8' )
         b4 = slicer.util.findChildren(text='Step9' )
         b5 = slicer.util.findChildren(text='Step10' )
+        b6 = slicer.util.findChildren(text='Step0' )
 
         bl[0].hide()
         b2[0].hide()
         b3[0].hide()
         b4[0].hide()
         b5[0].hide()
+        b6[0].hide()
 
 

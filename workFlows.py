@@ -35,6 +35,7 @@ class workFlowsWidget:
   def setup(self):
 
   	self.Step1 = Flujos.Step1('Step1')
+  	self.Step0 = Flujos.Step0('Step0')
   	self.Step2 = Flujos.Step2('Step2')
   	self.Step3 = Flujos.Step3('Step3')
   	self.Step4 = Flujos.Step4('Step4')
@@ -47,6 +48,7 @@ class workFlowsWidget:
 
   	steps = []
 	steps.append(self.Step1)
+	steps.append(self.Step0)
 	steps.append(self.Step2)
 	steps.append(self.Step3)
 	steps.append(self.Step4)
@@ -63,6 +65,7 @@ class workFlowsWidget:
 	
 	self.workflow.addTransition(self.Step1, self.Step2, 'pass', ctk.ctkWorkflow.Bidirectional )
 	self.workflow.addTransition(self.Step1, self.Step3, 'fail', ctk.ctkWorkflow.Bidirectional )
+	self.workflow.addTransition(self.Step1, self.Step0, 'Reg', ctk.ctkWorkflow.Bidirectional )
 	self.workflow.addTransition(self.Step3, self.Step4)
 	self.workflow.addTransition(self.Step2, self.Step5)
 	self.workflow.addTransition(self.Step5, self.Step6, 'pass', ctk.ctkWorkflow.Bidirectional )

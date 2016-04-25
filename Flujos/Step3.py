@@ -55,9 +55,16 @@ class Step3(ctk.ctkWorkflowWidgetStep, ) :
 
     def killButton(self):
         # hide useless button
-        bl = slicer.util.findChildren(text='Step5' )
-        b2 = slicer.util.findChildren(text='Step4' )
+        bl = slicer.util.findChildren(text='Step6' )
+        b2 = slicer.util.findChildren(text='Step7' )
+        b3 = slicer.util.findChildren(text='Step8' )
+        b4 = slicer.util.findChildren(text='Step9' )
+        b5 = slicer.util.findChildren(text='Step10' )
+
         bl[0].hide()
         b2[0].hide()
+        b3[0].hide()
+        b4[0].hide()
+        b5[0].hide()
 
 
