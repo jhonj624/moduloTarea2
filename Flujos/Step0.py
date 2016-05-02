@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
-
+import xlrd
 
 class Step0(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -59,9 +59,10 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
 
         
     def onEntry(self, comingFrom, transitionType):
+        self.ctimer = qt.QTimer()
+        self.ctimer.singleShot(0, self.killButton)
         super(Step0, self).onEntry(comingFrom, transitionType)
-        print('onEntry - step %s' % self.id())
-    
+        
     def onExit(self, goingTo, transitionType):
         super(Step0, self).onExit(goingTo, transitionType)
         print('onExit - step %s' % self.id())
@@ -101,6 +102,8 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
         if self.vinculoComboBox.currentIndex == 0:
             if (self.contra == self.contra1) and (self.name != " ") :
                 print "Registro exitoso"
+                book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")
+                
             else:
                 qt.QMessageBox.critical(slicer.util.mainWindow(),'Error de registro', 'Intente de nuevo')
 

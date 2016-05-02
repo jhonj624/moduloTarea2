@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
+import xlrd
 
 
 class Step3(ctk.ctkWorkflowWidgetStep, ) :
@@ -39,13 +40,30 @@ class Step3(ctk.ctkWorkflowWidgetStep, ) :
         print('onExit - step %s' % self.id())
     
     def validate(self, desiredBranchId):
-        if (self.name =="Profesor" and self.contra == "1111"):
-          validationSuceeded = True
-        else:
-          validationSuceeded = False
-          qt.QMessageBox.critical(slicer.util.mainWindow(),'Error Login', 'Usuario y/o contrasena invalidos')
-        super(Step3, self).validate(validationSuceeded, desiredBranchId)
-        print('Validate - step %s' % self.id())
+        i=1
+        m=0
+        a=['Inicio']
+        
+        book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")                
+        
+        while i!=0:
+            try:
+                first_sheet=book.sheet_by_index(0)
+                a=first_sheet.row_values(i)
+                print a[0]
+                print a[1]
+                if (self.name == a[0] and self.contra == a[1]):
+                    validationSuceeded = True
+                    super(Step3, self).validate(validationSuceeded, desiredBranchId)
+                    print "Usuario encontrado"
+                    m=1
+                i=i+1
+            except(IndexError):
+                i=0
+  
+        if(i==0 and m!=1):
+              super(Step3, self).validate(False, desiredBranchId)
+              qt.QMessageBox.critical(slicer.util.mainWindow(),'Error Login', 'Usuario y/o contrasena invalidos')
 
     def textchanged1(self,text):
         self.name = text

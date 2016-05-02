@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
+import xlrd
 
 class Step2(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -13,8 +14,7 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
         self.__layout.addRow("",qt.QWidget())
         self.__layout.addRow("",qt.QWidget())
         self.__layout.addRow("",qt.QWidget())
- 
-        
+
         self.nombreLabel = qt.QLabel("         Nombre:")
         self.nombreTextEdit = qt.QLineEdit()
         self.nombreTextEdit.setFixedWidth(200)
@@ -35,18 +35,33 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
     def onExit(self, goingTo, transitionType):
         super(Step2, self).onExit(goingTo, transitionType)
         print('onExit - step %s' % self.id())
-        
-    
-    def validate(self, desiredBranchId):
-        if (self.name =="Alumno" and self.contra == "1111"):
-          validationSuceeded = True
-        else:
-          validationSuceeded = False
-          qt.QMessageBox.critical(slicer.util.mainWindow(),'Error Login', 'Usuario y/o contrasena invalidos')
           
-        super(Step2, self).validate(validationSuceeded, desiredBranchId)
-        print('Validate - step %s' % self.id())
-
+    def validate(self, desiredBranchId):
+        i=1
+        m=0
+        a=['Inicio']
+        
+        book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")                
+        
+        while i!=0:
+            try:
+                first_sheet=book.sheet_by_index(0)
+                a=first_sheet.row_values(i)
+                print a[0]
+                print a[1]
+                if (self.name == a[0] and self.contra == a[1]):
+                    validationSuceeded = True
+                    super(Step2, self).validate(validationSuceeded, desiredBranchId)
+                    print "Usuario encontrado"
+                    m=1
+                i=i+1
+            except(IndexError):
+                i=0
+  
+        if(i==0 and m!=1):
+              super(Step2, self).validate(False, desiredBranchId)
+              qt.QMessageBox.critical(slicer.util.mainWindow(),'Error Login', 'Usuario y/o contrasena invalidos')
+                
     def killButton(self):
         bl = slicer.util.findChildren(text='Step6' )
         b2 = slicer.util.findChildren(text='Step7' )

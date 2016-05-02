@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
 
+import Flujos
+
+
 class Step1(ctk.ctkWorkflowWidgetStep) :
     """Step implemented using the derivation approach"""
     
