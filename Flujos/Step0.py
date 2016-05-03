@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
-import xlrd
+from xlwt import Workbook
+from xlrd import open_workbook
+from xlutils.copy import copy
 
 class Step0(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -98,11 +100,30 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
         self.contra1 = text
 
     def onApplyRegistro(self):
-        print "Registro realizado"
+        
         if self.vinculoComboBox.currentIndex == 0:
             if (self.contra == self.contra1) and (self.name != " ") :
-                print "Registro exitoso"
-                book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")
+                i=1
+                m=1
+                while i!=0:
+                    try:   
+
+                        rb=open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\creado.xls")
+                        wb = copy(rb)
+                        first_sheet=rb.sheet_by_index(0)
+                        a=first_sheet.row_values(i)
+                        i=i+1
+                        m=m+1  
+                        print "Ingreso a try"
+                    except(IndexError):
+                        i=0
+                        print m
+
+                if(i==0):
+                    wb.get_sheet(0).write(m,0,self.name)
+                    wb.get_sheet(0).write(m,1,self.contra)
+                    wb.save('C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\creado.xls')
+                    print "Registro realizado"
                 
             else:
                 qt.QMessageBox.critical(slicer.util.mainWindow(),'Error de registro', 'Intente de nuevo')
