@@ -3,6 +3,7 @@ from __main__ import vtk, qt, ctk, slicer
 import xlrd
 
 
+
 class Step3(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
     
@@ -43,8 +44,9 @@ class Step3(ctk.ctkWorkflowWidgetStep, ) :
         i=1
         m=0
         a=['Inicio']
-        
-        book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")                
+        curso=str(self.cursoRegistroComboBox.currentText)
+        filepath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos/"+curso
+        book=xlrd.open_workbook(filepath)                
         
         while i!=0:
             try:

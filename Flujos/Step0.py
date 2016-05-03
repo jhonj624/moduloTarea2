@@ -48,9 +48,9 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
 
         self.cursoRegistro = qt.QLabel('Curso al que pertenece')
         self.cursoRegistroComboBox = qt.QComboBox()
-        self.mypath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos"
-        self.onlyfiles = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))]
-        for curso in self.onlyfiles:
+        self.mypath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos" #Se crea path para busqueda de cursos
+        self.onlyfiles = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))] #Lista los archivos que estan dentro del path
+        for curso in self.onlyfiles: #Muestra en el comboBox de cursos los archivos que estan presentes en el path
             self.cursoRegistroComboBox.addItem(curso)
         self.__layout.addRow(self.cursoRegistro,self.cursoRegistroComboBox)
 
@@ -110,10 +110,11 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
             if (self.contra == self.contra1) and (self.name != " ") :
                 i=1
                 m=1
+                curso=str(self.cursoRegistroComboBox.currentText)
                 while i!=0:
                     try:   
-
-                        rb=open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\creado.xls")
+                        filepath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos/"+curso
+                        rb=open_workbook(filepath)
                         wb = copy(rb)
                         first_sheet=rb.sheet_by_index(0)
                         a=first_sheet.row_values(i)
@@ -127,8 +128,8 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
                 if(i==0):
                     wb.get_sheet(0).write(m,0,self.name)
                     wb.get_sheet(0).write(m,1,self.contra)
-                    wb.save('C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\creado.xls')
-                    print "Registro realizado"
+                    wb.save(filepath)
+                    print "Registro realizado en" + curso
                 
             else:
                 qt.QMessageBox.critical(slicer.util.mainWindow(),'Error de registro', 'Intente de nuevo')
@@ -144,4 +145,6 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
         self.nombreRegistroTextEdit.setText("")
         self.contrasenaRegistro1TextEdit.setText("")
         self.contrasenaRegistroTextEdit.setText("")
+
+
 

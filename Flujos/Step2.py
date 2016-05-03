@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
 import xlrd
+from os import listdir
+from os.path import isfile, join
 
 class Step2(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -27,6 +29,14 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
         self.contrasenaTextEdit.textChanged.connect(self.textchanged2)
         self.__layout.addRow(self.contrasenaLabeL,self.contrasenaTextEdit)
 
+        self.cursoRegistro = qt.QLabel('Curso al que pertenece')
+        self.cursoLoginComboBox = qt.QComboBox()
+        self.mypath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos" #Se crea path para busqueda de cursos
+        self.onlyfiles = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))] #Lista los archivos que estan dentro del path
+        for curso in self.onlyfiles: #Muestra en el comboBox de cursos los archivos que estan presentes en el path
+            self.cursoLoginComboBox.addItem(curso)
+        self.__layout.addRow(self.cursoRegistro,self.cursoLoginComboBox)
+
     def onEntry(self, comingFrom, transitionType):
         super(Step2, self).onEntry(comingFrom, transitionType)
         self.ctimer = qt.QTimer()
@@ -40,8 +50,9 @@ class Step2(ctk.ctkWorkflowWidgetStep, ) :
         i=1
         m=0
         a=['Inicio']
-        
-        book=xlrd.open_workbook("C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos\Lista1.xlsx")                
+        curso=str(self.cursoLoginComboBox.currentText)
+        filepath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos/"+curso
+        book=xlrd.open_workbook(filepath)                
         
         while i!=0:
             try:
