@@ -3,6 +3,8 @@ from __main__ import vtk, qt, ctk, slicer
 from xlwt import Workbook
 from xlrd import open_workbook
 from xlutils.copy import copy
+from os import listdir
+from os.path import isfile, join
 
 class Step0(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -46,7 +48,10 @@ class Step0(ctk.ctkWorkflowWidgetStep, ) :
 
         self.cursoRegistro = qt.QLabel('Curso al que pertenece')
         self.cursoRegistroComboBox = qt.QComboBox()
-        self.cursoRegistroComboBox.addItem('0123345')
+        self.mypath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos"
+        self.onlyfiles = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))]
+        for curso in self.onlyfiles:
+            self.cursoRegistroComboBox.addItem(curso)
         self.__layout.addRow(self.cursoRegistro,self.cursoRegistroComboBox)
 
         self.__layout.addRow(" ",qt.QWidget())
