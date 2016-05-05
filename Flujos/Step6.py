@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
 import sys
-
+import time
 
 class Step6(ctk.ctkWorkflowWidgetStep, ) :
     """Step implemented using the derivation approach"""
@@ -15,6 +15,9 @@ class Step6(ctk.ctkWorkflowWidgetStep, ) :
         font =qt.QFont("Sans Serif", 12, qt.QFont.Bold)
 
         self.__layout = qt.QFormLayout( self )
+        self.botonRegistro = qt.QPushButton('Realizar Registro')
+        self.botonRegistro.connect('clicked(bool)',self.onApplyRegistro)
+        self.__layout.addRow(self.botonRegistro)
         
     
     def onEntry(self, comingFrom, transitionType):
@@ -25,12 +28,19 @@ class Step6(ctk.ctkWorkflowWidgetStep, ) :
 
     def onExit(self, goingTo, transitionType):
         super(Step6, self).onExit(goingTo, transitionType)
-        print('onExit - step %s' % self.id())
     
     def validate(self, desiredBranchId):
         validationSuceeded = True
         super(Step6, self).validate(validationSuceeded, desiredBranchId)
-        print('Validate - step %s' % self.id())
+       
+    def onApplyRegistro(self):
+        Fecha=str(time.strftime('%d %b %y %H:%M:%S'))
+        sys.argv[3]=Fecha
+        print sys.argv
+        carpeta = sys.argv[2]
+        Nombre = sys.argv[0] +"_"+sys.argv[1] +"_"+sys.argv[2] +"_"+sys.argv[3]
+        print "Se guarda en la carpeta: "+carpeta
+        print "Con el nombre: " +Nombre
 
     def killButton(self):
         # hide useless button

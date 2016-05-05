@@ -35,12 +35,10 @@ class Step5(ctk.ctkWorkflowWidgetStep):
         self.ctimer = qt.QTimer()
         self.ctimer.singleShot(0, self.killButton)
         
-        print sys.argv
-            
     def onExit(self, goingTo, transitionType):
 
         super(Step5, self).onExit(goingTo, transitionType)
-        print('onExit - step %s' % self.id())
+        
     
     def validate(self, desiredBranchId):
 
@@ -49,7 +47,6 @@ class Step5(ctk.ctkWorkflowWidgetStep):
         if self.trayectoriaProgramadaButton.isChecked():
           desiredBranchId = 'fail'
         super(Step5, self).validate(True, desiredBranchId)
-        print('Validate - step %s' % self.id())
 
     def killButton(self):
 

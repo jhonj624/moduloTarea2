@@ -54,7 +54,7 @@ class Step2( ctk.ctkWorkflowWidgetStep , ) :
         m=0
         a=['Inicio']
         self.curso=str(self.cursoLoginComboBox.currentText)
-        sys.argv[2]=self.curso
+        
         filepath="C:\Users\Camilo_Q\Documents\GitHub\workFlows\Cursos/"+self.curso
         book=xlrd.open_workbook(filepath)                
         
@@ -67,7 +67,9 @@ class Step2( ctk.ctkWorkflowWidgetStep , ) :
                 print a[0]
                 print a[1]
                 if (self.name == a[0] and self.contra == a[1]):
-
+                    sys.argv[0]=str(self.name)
+                    sys.argv[1]=str(self.contra)
+                    sys.argv[2]=self.curso
 
                     validationSuceeded = True
                     super(Step2, self).validate(validationSuceeded, desiredBranchId)
@@ -86,13 +88,13 @@ class Step2( ctk.ctkWorkflowWidgetStep , ) :
     
     def textchanged1(self,text):
         self.name = text
-        sys.argv[0]=str(self.name)
+        
                     
                     
 
     def textchanged2(self,text):
         self.contra = text
-        sys.argv[1]=str(self.contra)
+        
 
     def killButton(self):
         bl = slicer.util.findChildren(text='Step6' )
