@@ -44,7 +44,8 @@ class Step1(ctk.ctkWorkflowWidgetStep) :
         
     def onExit(self, goingTo, transitionType):
         super(Step1, self).onExit(goingTo, transitionType)
-        print goingTo
+        
+        
     
     def validate(self, desiredBranchId):
         if self.EstudianteButton.isChecked():

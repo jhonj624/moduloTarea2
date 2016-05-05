@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
+import sys
 
 
 class Step6(ctk.ctkWorkflowWidgetStep, ) :
@@ -20,6 +21,7 @@ class Step6(ctk.ctkWorkflowWidgetStep, ) :
         super(Step6, self).onEntry(comingFrom, transitionType)
         self.ctimer = qt.QTimer()
         self.ctimer.singleShot(0, self.killButton)
+        print sys.argv
 
     def onExit(self, goingTo, transitionType):
         super(Step6, self).onExit(goingTo, transitionType)

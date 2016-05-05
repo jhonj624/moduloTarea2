@@ -1,11 +1,14 @@
 # -*- coding: UTF-8 -*-
 from __main__ import vtk, qt, ctk, slicer
+import Flujos
+from FlujosStep import *
+import sys
 
 
-class Step5(ctk.ctkWorkflowWidgetStep, ) :
-    """Step implemented using the derivation approach"""
+class Step5(ctk.ctkWorkflowWidgetStep):
     
     def __init__(self, stepid):
+
         self.initialize(stepid)
         self.setName( 'Menu estudiante'  )
         
@@ -27,15 +30,20 @@ class Step5(ctk.ctkWorkflowWidgetStep, ) :
         self.__layout.addRow(self.trayectoriaProgramadaButton)
             
     def onEntry(self, comingFrom, transitionType):
+        
         super(Step5, self).onEntry(comingFrom, transitionType)
         self.ctimer = qt.QTimer()
         self.ctimer.singleShot(0, self.killButton)
+        
+        print sys.argv
             
     def onExit(self, goingTo, transitionType):
+
         super(Step5, self).onExit(goingTo, transitionType)
         print('onExit - step %s' % self.id())
     
     def validate(self, desiredBranchId):
+
         if self.trayectoriaLibreButton.isChecked():
           desiredBranchId = 'pass'
         if self.trayectoriaProgramadaButton.isChecked():
@@ -44,7 +52,7 @@ class Step5(ctk.ctkWorkflowWidgetStep, ) :
         print('Validate - step %s' % self.id())
 
     def killButton(self):
-        # hide useless button
+
         bl = slicer.util.findChildren(text='Step6' )
         b2 = slicer.util.findChildren(text='Step7' )
         b3 = slicer.util.findChildren(text='Step8' )
